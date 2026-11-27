@@ -159,7 +159,8 @@ def football_api(path, params=None):
         with _api_lock:
             _api_cache[cache_key] = {"time": now, "data": data}
         return data, None
-    except requests.RequestException:
+    except requests.RequestException as exc:
+        print(f"Football API request failed:{exc}")
         return None, "Football data is temporarily unavailable. Please try again shortly."
     except ValueError:
         return None, "The football data provider returned an unreadable response."
