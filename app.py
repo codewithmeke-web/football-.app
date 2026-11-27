@@ -161,7 +161,7 @@ def football_api(path, params=None):
         return data, None
     except requests.RequestException as exc:
         print(f"Football API request failed:{exc}")
-        print(f"Provider response: {exc.response.test if exc.response is not None else 'No reponse body'}")                                
+        print(f"Provider response: {exc.response.text if exc.response is not None else 'No reponse body'}")                                
         return None, "Football data is temporarily unavailable. Please try again shortly."
     except ValueError:
         return None, "The football data provider returned an unreadable response."
