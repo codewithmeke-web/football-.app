@@ -16,6 +16,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "change-this-secret-key")
+app.config["PERMANENT_SESSION_LIFETIME"] = timedel ta(days=30)
 DATABASE = os.environ.get("DATABASE_PATH", "football.db")
 FOOTBALL_API_KEY = os.environ.get("FOOTBALL_API_KEY", "").strip()
 API_BASE = "https://api.football-data.org/v4"
@@ -666,6 +667,7 @@ def login():
             user = db.execute("SELECT * FROM users WHERE username=?", (username,)).fetchone()
         if user and check_password_hash(user["password_hash"], password):
             session.clear()
+            session.permanent = True
             session["user_id"] = user["id"]
             session["username"] = user["username"]
             session["role"] = user["role"]
